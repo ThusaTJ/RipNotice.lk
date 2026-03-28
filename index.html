@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RipNotice.lk — Memorial Platform</title>
+    <link rel="icon" href="assets/fav1.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Navbar (injected) -->
+    <div id="navbar"></div>
+
+    <!-- ========== MAIN PAGE ========== -->
+    <div id="mainPage">
+
+        <!-- Mobile sidebar tabs (visible ≤ 991px) -->
+        <div class="mobile-sidebar-row">
+            <div class="mobile-sidebar-tabs">
+                <div class="mobile-sidebar-tab active" data-tab="posts" onclick="switchMobileTab('posts')">
+                    <i class="bi bi-geo-alt-fill"></i> Browse by District
+                </div>
+                <div class="mobile-sidebar-tab" data-tab="comments" onclick="switchMobileTab('comments')">
+                    <i class="bi bi-chat-left-text-fill"></i> Recent Comments
+                </div>
+            </div>
+            <div class="mobile-sidebar-panel active" id="mobilePanel-posts">
+                <div id="mobileDistrictList"></div>
+            </div>
+            <div class="mobile-sidebar-panel" id="mobilePanel-comments">
+                <div id="mobileCommentsList"></div>
+            </div>
+        </div>
+
+        <!-- 3-Column Layout: left (district) | center (feed) | right (comments+ads) -->
+        <div class="page-body">
+
+            <!-- LEFT SIDEBAR — Browse by District -->
+            <aside class="left-sidebar" id="leftSidebar">
+                <!-- Filters view (hidden by default) -->
+                <div id="filterPanel" style="display:none;">
+                    <div class="filter-panel">
+                        <div class="filter-panel-header">
+                            <span class="filter-panel-title"><i class="bi bi-funnel-fill"></i> Filters</span>
+                            <button class="filter-back-btn" onclick="showDistrictList()">
+                                <i class="bi bi-arrow-left"></i> Back
+                            </button>
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">District</label>
+                            <input class="filter-input" id="filterDistrict" placeholder="e.g., Jaffna" value="Jaffna">
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Name</label>
+                            <input class="filter-input" id="filterName" placeholder="Search name...">
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Birthplace</label>
+                            <input class="filter-input" id="filterBirthplace" placeholder="e.g., Jaffna">
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">Lived place</label>
+                            <input class="filter-input" id="filterLived" placeholder="e.g., Colombo">
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">From (Post Date)</label>
+                            <input class="filter-input" type="date" id="filterFrom" placeholder="From post date">
+                        </div>
+                        <div class="filter-field">
+                            <label class="filter-label">To (Post Date)</label>
+                            <input class="filter-input" type="date" id="filterTo" placeholder="To post date">
+                        </div>
+                        <button class="filter-apply-btn" onclick="applyFilters()">Apply</button>
+                    </div>
+                </div>
+
+                <!-- District list view -->
+                <div id="districtView">
+                    <div class="sidebar-section-title">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span style="display:flex;align-items:center;gap:4px;">
+                            Browse by District
+                        </span>
+                    </div>
+                    <div class="sidebar-section-subtitle">Filter memorials by where they lived</div>
+                    <div id="districtList"></div>
+                </div>
+            </aside>
+
+            <!-- CENTER CONTENT — scrollable feed -->
+            <main class="center-content" id="centerFeed">
+                <!-- SUB BAR -->
+                <div class="sub-bar">
+                    <div class="sub-bar-inner">
+                        <nav class="page-nav">
+                            <a href="#" class="page-nav-link active" id="navHome" onclick="filterByPage && filterByPage('home'); return false;">
+                                <i class="bi bi-house-fill"></i> Home
+                            </a>
+                            <a href="#" class="page-nav-link" id="navObituary" onclick="filterByPage && filterByPage('obituary'); return false;">
+                                <i class="bi bi-file-text-fill"></i> Obituaries
+                            </a>
+                            <a href="#" class="page-nav-link" id="navMemorial" onclick="filterByPage && filterByPage('memorial'); return false;">
+                                <i class="bi bi-award-fill"></i> Memorials
+                            </a>
+                        </nav>
+                        <div class="sub-bar-right">
+                            <span class="sub-tagline"><i class="bi bi-telephone-fill"></i> 077 123 4567 | 077 123 4567 </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="obituaryContainer"></div>
+            </main>
+
+            <!-- RIGHT SIDEBAR — Recent Comments + Ads -->
+            <aside class="right-sidebar">
+                <div class="rc-heading">
+                    <i class="bi bi-chat-left-text-fill"></i> Recent Comments
+                </div>
+                <div class="rc-subtitle">Memorials with the latest Comments activity</div>
+                <div id="recentCommentsList"></div>
+
+                <!-- Sponsored Ad -->
+                <div class="ad-block">
+                    <div class="ad-header">
+                        <span class="ad-label">Sponsored</span>
+                        <button class="ad-add-btn">+ Your Ad</button>
+                    </div>
+                    <img src="https://picsum.photos/290/180?random=55" class="ad-img" alt="Sponsored">
+                    <div class="ad-btns">
+                        <button class="ad-wa"><i class="bi bi-whatsapp"></i> Contact</button>
+                        <button class="ad-view">View more</button>
+                    </div>
+                </div>
+
+                <!-- Second Ad -->
+                <div class="ad-block" style="margin-top:1px;">
+                    <div class="ad-header">
+                        <span class="ad-label">Sponsored</span>
+                        <button class="ad-add-btn">+ Your Ad</button>
+                    </div>
+                    <img src="https://picsum.photos/290/180?random=66" class="ad-img" alt="Sponsored">
+                    <div class="ad-btns">
+                        <button class="ad-wa"><i class="bi bi-whatsapp"></i> Contact</button>
+                        <button class="ad-view">View more</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- ========== DETAIL PAGE ========== -->
+    <div id="detailPage" class="detail-page">
+        <div class="detail-wrap">
+            <a href="#" class="back-btn" onclick="showMainPage(); return false;">
+                <i class="bi bi-arrow-left"></i> Back to Notices
+            </a>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <!-- ========== FIXED BUTTONS ========== -->
+    <button class="scroll-top" onclick="scrollToTop()" id="scrollTopBtn">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+    <div class="chat-btn" title="Live Chat">
+        <i class="bi bi-chat-dots-fill"></i>
+    </div>
+
+    <!-- ========== CREATE MEMORIAL MODAL ========== -->
+    <div class="modal fade" id="createMemorialModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Create Funeral Notice</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Post Type *</label>
+                        <input type="text" class="form-control" id="postType" list="postTypeOptions" placeholder="e.g., Obituary, 1st Year Remembrance">
+                        <datalist id="postTypeOptions">
+                            <option value="Obituary">
+                            <option value="1st Year Remembrance">
+                            <option value="2nd Year Remembrance">
+                            <option value="3rd Year Remembrance">
+                            <option value="5th Year Remembrance">
+                            <option value="10th Year Remembrance">
+                        </datalist>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control" id="memorialName" placeholder="Enter full name">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Birth Date *</label>
+                            <input type="date" class="form-control" id="birthDate">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Death Date *</label>
+                            <input type="date" class="form-control" id="deathDate">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Country *</label>
+                        <select class="form-control" id="country">
+                            <option value="">Select Country</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Sri Lanka">Sri Lanka</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="Germany">Germany</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">District *</label>
+                        <input type="text" class="form-control" id="location" placeholder="e.g., Jaffna, Colombo">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Religion</label>
+                        <input type="text" class="form-control" id="religion" placeholder="e.g., Hinduism, Buddhism, Christianity">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Profile Photo</label>
+                        <input type="file" class="form-control" id="photoUpload" accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Brief Biography (Optional)</label>
+                        <textarea class="form-control" id="biography" rows="4" placeholder="Share memories and details about their life…"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn-modal-create" onclick="createMemorial()">
+                        <i class="bi bi-plus-circle"></i> Create Notice
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SHARE YOUR FEELING MODAL ========== -->
+    <div class="modal fade" id="shareFeelingModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select Tribute Type</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="sfmStep1">
+                        <div class="sfm-grid">
+                            <div class="sfm-card" onclick="selectTributeType('cards')">
+                                <div class="sfm-icon">💌</div>
+                                <div class="sfm-name">Cards</div>
+                                <div class="sfm-desc">Send a tribute card.</div>
+                            </div>
+                            <div class="sfm-card" onclick="selectTributeType('candle')">
+                                <div class="sfm-icon">🕯️</div>
+                                <div class="sfm-name">Lighting of Candle</div>
+                                <div class="sfm-desc">Mark your condolences.</div>
+                            </div>
+                            <div class="sfm-card" onclick="selectTributeType('wreath')">
+                                <div class="sfm-icon">💐</div>
+                                <div class="sfm-name">Wreath of Love</div>
+                                <div class="sfm-desc">Show your last respect.</div>
+                            </div>
+                            <div class="sfm-card" onclick="selectTributeType('letter')">
+                                <div class="sfm-icon">✍️</div>
+                                <div class="sfm-name">Letter</div>
+                                <div class="sfm-desc">Say the words you missed.</div>
+                            </div>
+                            <div class="sfm-card" onclick="selectTributeType('moments')">
+                                <div class="sfm-icon">📸</div>
+                                <div class="sfm-name">Treasured Moments</div>
+                                <div class="sfm-desc">Share memorable photos.</div>
+                            </div>
+                            <div class="sfm-card" onclick="selectTributeType('message')">
+                                <div class="sfm-icon">💬</div>
+                                <div class="sfm-name">Message</div>
+                                <div class="sfm-desc">Send a heartfelt message.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="sfmStep2" style="display:none;">
+                        <button class="sfm-back" onclick="sfmGoBack()">
+                            <i class="bi bi-arrow-left"></i> Back
+                        </button>
+                        <div class="sfm-form-wrap">
+                            <div class="sfm-form-header" id="sfmFormHeader"></div>
+                            <div class="sfm-form-body" id="sfmFormBody"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="sfmFooter">
+                    <button class="sfm-footer-close" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SEND FLOWERS MODAL ========== -->
+    <div class="modal fade" id="sendFlowersModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-flower1 me-2"></i>Send Flowers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="split-modal-layout">
+                        <div class="split-left">
+                            <div class="split-hl-label">Hotline</div>
+                            <div class="split-hl-number">+94 75 022 0123<br>071 55 40 123</div>
+                            <p class="split-hl-desc">For urgent arrangements, call directly or leave your details.</p>
+                            <div class="split-privacy">
+                                <i class="bi bi-info-circle-fill"></i>
+                                We will not display your contact details in public.
+                            </div>
+                        </div>
+                        <div class="split-right">
+                            <div class="split-form-title">Send Flowers Request</div>
+                            <div class="split-field">
+                                <label class="split-label">Your Name</label>
+                                <input type="text" class="split-input" id="flowersName" placeholder="Enter your name">
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Your Email</label>
+                                <input type="email" class="split-input" id="flowersEmail" placeholder="Enter your email">
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Your Phone</label>
+                                <div class="phone-row">
+                                    <select class="split-input phone-code" id="flowersPhoneCode">
+                                        <option value="+94">+94</option>
+                                        <option value="+1">+1</option>
+                                        <option value="+44">+44</option>
+                                        <option value="+61">+61</option>
+                                        <option value="+91">+91</option>
+                                    </select>
+                                    <input type="tel" class="split-input" id="flowersPhone" placeholder="Mobile number" style="flex:1;">
+                                </div>
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Country</label>
+                                <input type="text" class="split-input" id="flowersCountry" placeholder="Your country">
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Message (Optional)</label>
+                                <textarea class="split-input split-textarea" id="flowersMessage" placeholder="Date, time, location, preferences…"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer split-footer">
+                    <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                    <button class="split-submit" onclick="submitFlowersRequest()">
+                        <i class="bi bi-flower1"></i> Send Flowers
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== DONATE MODAL ========== -->
+    <div class="modal fade" id="donateModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="bi bi-coin me-2"></i>Support the Family</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="split-modal-layout">
+                        <div class="split-left">
+                            <div class="split-support-title">Support the Family</div>
+                            <p class="split-support-desc">Our admin team will contact you with bank details and manage sending the donation to the family.</p>
+                            <div class="split-hl-label" style="margin-top:8px;">Hotline</div>
+                            <div class="split-hl-number">+94 75 022 0123<br>071 55 40 123</div>
+                            <div class="split-privacy">
+                                <i class="bi bi-info-circle-fill"></i>
+                                We will not display your contact details in public.
+                            </div>
+                        </div>
+                        <div class="split-right">
+                            <div class="split-form-title">Donation Request</div>
+                            <div class="split-field">
+                                <label class="split-label">Your Name</label>
+                                <input type="text" class="split-input" id="donateName" placeholder="Enter your name">
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Your Email</label>
+                                <input type="email" class="split-input" id="donateEmail" placeholder="Enter your email">
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Your Phone</label>
+                                <div class="phone-row">
+                                    <select class="split-input phone-code" id="donatePhoneCode">
+                                        <option value="+94">+94</option>
+                                        <option value="+1">+1</option>
+                                        <option value="+44">+44</option>
+                                        <option value="+61">+61</option>
+                                        <option value="+91">+91</option>
+                                    </select>
+                                    <input type="tel" class="split-input" id="donatePhone" placeholder="Mobile number" style="flex:1;">
+                                </div>
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Country</label>
+                                <input type="text" class="split-input" id="donateCountry" placeholder="Your country">
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Donation Amount (Optional)</label>
+                                <div class="amount-row">
+                                    <input type="number" class="split-input" id="donateAmount" placeholder="Amount" style="flex:1;">
+                                    <select class="split-input curr-sel" id="donateCurrency">
+                                        <option>LKR</option>
+                                        <option>USD</option>
+                                        <option>GBP</option>
+                                        <option>AUD</option>
+                                        <option>CAD</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="split-field">
+                                <label class="split-label">Notes (Optional)</label>
+                                <textarea class="split-input split-textarea" id="donateNotes" placeholder="Preferred donation method or any notes…"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer split-footer">
+                    <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                    <button class="split-submit" onclick="submitDonateRequest()">
+                        <i class="bi bi-coin"></i> Submit Donation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer (injected) -->
+    <div id="footer"></div>
+
+    <!-- Hidden Google Translate container -->
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Inject navbar and footer
+        fetch("navbar.html")
+            .then(r => r.text())
+            .then(d => { document.getElementById("navbar").innerHTML = d; });
+        fetch("footer.html")
+            .then(r => r.text())
+            .then(d => { document.getElementById("footer").innerHTML = d; });
+    </script>
+
+    <script src="js/script.js"></script>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,ta,si',
+                autoDisplay: false,
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        .goog-te-banner-frame, .skiptranslate { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { font-size: 0 !important; }
+        .goog-te-gadget > span { display: none !important; }
+        .goog-te-gadget select { display: none !important; }
+    </style>
+</body>
+</html>
