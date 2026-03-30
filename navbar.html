@@ -20,20 +20,20 @@
         <div class="top-bar">
             <div class="top-bar-inner">
                 <nav class="top-nav-links">
-                    <a href="#" onclick="showMainPage(); return false;">Home</a>
+                    <a href="index.html">Home</a>
                     <a href="about.html">About Us</a>
                     <a href="service.html">Services</a>
                     <a href="contact.html">Contact Us</a>
-                     <!-- Other Webs dropdown -->
+                    <!-- Other Webs dropdown -->
                     <div class="other-webs-wrap">
                         <button class="other-webs-btn" id="otherWebsBtn">
                             Other Webs <i class="bi bi-chevron-down"></i>
                         </button>
                         <div class="other-webs-dropdown" id="otherWebsMenu">
+                            <a href="https://ripnews.lk" target="_blank" class="other-webs-item">RipNews</a>
                             <a href="https://funeralnotice.lk" target="_blank" class="other-webs-item">FuneralNotice</a>
-                            <a href="https://funeralnews.lk"   target="_blank" class="other-webs-item">FuneralNews</a>
+                            <a href="https://funeralnews.lk" target="_blank" class="other-webs-item">FuneralNews</a>
                             <a href="https://digitalnotice.lk" target="_blank" class="other-webs-item">DigitalNotice</a>
-                            <a href="https://ripnews.lk"       target="_blank" class="other-webs-item">RipNews</a>
                         </div>
                     </div>
                 </nav>
@@ -53,12 +53,12 @@
         </div>
         <div class="header-inner">
             <div class="logo-wrap" onclick="showMainPage()">
-                <img src="assets/logo.png" alt="RipNotice.lk">
+                <a href="index.html"><img src="assets/logo.png" alt="RipNotice.lk"></a>
             </div>
             <div class="header-divider"></div>
             <div class="search-wrap">
                 <i class="bi bi-search search-icon"></i>
-                <input type="search" class="search-input" id="searchInput" placeholder="Search a person…">
+                <input type="search" class="search-input" id="searchInput" placeholder="Search a person...">
             </div>
             <button class="btn-create d-none d-lg-flex" data-bs-toggle="modal" data-bs-target="#createMemorialModal">
                 <i class="bi bi-plus-circle"></i> Create Notice

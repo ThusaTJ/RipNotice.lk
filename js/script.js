@@ -734,6 +734,26 @@ function initLangDropdown() {
     });
 }
 
+function initOtherWebsDropdown() {
+    const btn = document.getElementById('otherWebsBtn');
+    const menu = document.getElementById('otherWebsMenu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = menu.classList.contains('open');
+        menu.classList.toggle('open', !isOpen);
+        btn.classList.toggle('open', !isOpen);
+    });
+
+    document.addEventListener('click', () => {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+    });
+
+    menu.addEventListener('click', e => e.stopPropagation());
+}
+
 /* Google Translate widget init callback (called by GT script) */
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
@@ -751,7 +771,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRecentComments();
     initSearch();
 
-    // Give navbar time to inject, then init lang dropdown
+    // Give navbar time to inject, then init header dropdowns
+    setTimeout(initOtherWebsDropdown, 600);
     setTimeout(initLangDropdown, 600);
 
     // Footer year

@@ -113,7 +113,7 @@ a:hover { color: var(--gold-bright); }
     height: var(--topbar-h);
 }
 .top-bar-inner {
-    max-width: 1280px; margin: 0 auto; padding: 0 20px;
+    max-width: 1320px; margin: 0 auto; padding: 0 20px;
     display: flex; justify-content: space-between; align-items: center; height: 100%;
 }
 .top-nav-links { display: flex; align-items: center; gap: 2px; }
@@ -186,7 +186,7 @@ a:hover { color: var(--gold-bright); }
    MAIN HEADER BAR
    ============================================================ */
 .header-inner {
-    max-width: 1280px; margin: 0 auto; padding: 0 20px;
+    max-width: 1320px; margin: 0 auto; padding: 0 20px;
     display: flex; align-items: center; justify-content: space-between;
     gap: 20px; height: var(--mainbar-h);
 }
@@ -859,7 +859,7 @@ a:hover { color: var(--gold-bright); }
     max-width: 1280px; margin: 0 auto; padding: 0 24px;
     display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
 }
-.footer-logo { height: 38px; width: auto; opacity: 0.8; }
+.footer-logo { height: 60px; width: 150px; opacity: 0.8; }
 .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
 .footer-links a { color: var(--grey-dim); text-decoration: none; font-size: 0.8rem; font-weight: 700; font-family: 'Cinzel', serif; letter-spacing: 0.8px; transition: color 0.2s; }
 .footer-links a:hover { color: var(--gold); }
