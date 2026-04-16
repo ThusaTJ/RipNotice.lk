@@ -2,6 +2,45 @@
    RipNotice.lk — Main Script  (Fixed)
    ============================================================ */
 
+   /* ── Hamburger / Drawer ── */
+const hamburger    = document.getElementById('navHamburger');
+const drawer       = document.getElementById('mobileDrawer');
+const backdrop     = document.getElementById('drawerBackdrop');
+const hamburgerIco = document.getElementById('hamburgerIcon');
+
+function openDrawer() {
+    if (!drawer || !backdrop || !hamburger || !hamburgerIco) return;
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    hamburger.classList.add('open');
+    hamburgerIco.className = 'bi bi-x-lg';
+    document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+    if (!drawer || !backdrop || !hamburger || !hamburgerIco) return;
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburgerIco.className = 'bi bi-list';
+    document.body.style.overflow = '';
+}
+hamburger?.addEventListener('click', () =>
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer()
+);
+backdrop?.addEventListener('click', closeDrawer);
+document.querySelectorAll('.mobile-drawer-link').forEach(l => l.addEventListener('click', closeDrawer));
+window.addEventListener('resize', () => { if (window.innerWidth > 768) closeDrawer(); });
+
+/* ── Mobile lang options ── */
+document.querySelectorAll('.mobile-lang-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.querySelectorAll('.mobile-lang-opt').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+    });
+});
+
+
+
 /* ── DATA ── */
 const obituaries = [
     { id:1,  name:"Mrs Vijayalatha Vijayaratnam",    birth:"1952", death:"2026", location:"Mullaitivu, Sri Lanka<br>Batticaloa, Canada",          tributes:15, avatar:"https://i.pravatar.cc/150?img=1",  time:"13 hours ago", country:"Sri Lanka",     district:"Mullaitivu",   postType:"Obituary",             religion:"Hinduism",     age:74, biography:"A beloved mother and grandmother who touched the lives of everyone she met. She was known for her kindness, wisdom, and unwavering faith." },
@@ -754,6 +793,50 @@ function initOtherWebsDropdown() {
     menu.addEventListener('click', e => e.stopPropagation());
 }
 
+function initMobileDrawerControls() {
+    const hamburger = document.getElementById('navHamburger');
+    const drawer = document.getElementById('mobileDrawer');
+    const backdrop = document.getElementById('drawerBackdrop');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    if (!hamburger || !drawer || !backdrop || !hamburgerIcon || hamburger.dataset.bound === 'true') return;
+
+    const openDrawer = () => {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        hamburger.classList.add('open');
+        hamburgerIcon.className = 'bi bi-x-lg';
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeDrawer = () => {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburgerIcon.className = 'bi bi-list';
+        document.body.style.overflow = '';
+    };
+
+    hamburger.addEventListener('click', () => {
+        drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    backdrop.addEventListener('click', closeDrawer);
+    document.querySelectorAll('.mobile-drawer-link').forEach(link => {
+        link.addEventListener('click', closeDrawer);
+    });
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeDrawer();
+    });
+
+    document.querySelectorAll('.mobile-lang-opt').forEach(opt => {
+        opt.addEventListener('click', () => {
+            document.querySelectorAll('.mobile-lang-opt').forEach(option => option.classList.remove('active'));
+            opt.classList.add('active');
+        });
+    });
+
+    hamburger.dataset.bound = 'true';
+}
+
 /* Google Translate widget init callback (called by GT script) */
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
@@ -772,6 +855,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSearch();
 
     // Give navbar time to inject, then init header dropdowns
+    setTimeout(initMobileDrawerControls, 600);
     setTimeout(initOtherWebsDropdown, 600);
     setTimeout(initLangDropdown, 600);
 

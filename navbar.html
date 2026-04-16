@@ -52,6 +52,9 @@
             </div>
         </div>
         <div class="header-inner">
+            <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+                <i class="bi bi-list" id="hamburgerIcon"></i>
+            </button>
             <div class="logo-wrap" onclick="showMainPage()">
                 <a href="index.html"><img src="assets/logo.png" alt="RipNotice.lk"></a>
             </div>
@@ -68,6 +71,34 @@
             </button>
         </div>
     </header>
+
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+    <div class="mobile-topnav-drawer" id="mobileDrawer">
+        <div class="mobile-drawer-inner">
+            <div class="mobile-search-wrap">
+                <i class="bi bi-search mobile-search-icon"></i>
+                <input type="search" class="search-input" id="searchInput" placeholder="Search a person...">
+            </div>
+            <a href="index.html" class="mobile-drawer-link active"><i class="bi bi-house-fill"></i> Home</a>
+            <a href="about.html" class="mobile-drawer-link"><i class="bi bi-info-circle-fill"></i> About Us</a>
+            <a href="service.html" class="mobile-drawer-link"><i class="bi bi-briefcase-fill"></i> Services</a>
+            <a href="contact.html" class="mobile-drawer-link"><i class="bi bi-envelope-fill"></i> Contact Us</a>
+            <div class="mobile-drawer-divider"></div>
+            <a href="https://ripnews.lk" target="_blank" class="mobile-drawer-link"><i class="bi bi-newspaper"></i> RipNews.lk</a>
+            <a href="https://funeralnotice.lk" target="_blank" class="mobile-drawer-link"><i class="bi bi-megaphone-fill"></i> FuneralNotice.lk</a>
+            <a href="https://funeralnews.lk" target="_blank" class="mobile-drawer-link"><i class="bi bi-broadcast"></i> FuneralNews.lk</a>
+            <a href="https://digitalnotice.lk" target="_blank" class="mobile-drawer-link"><i class="bi bi-display-fill"></i> DigitalNotice.lk</a>
+            <div class="mobile-drawer-divider"></div>
+            <div class="mobile-drawer-lang">
+                <span class="mobile-drawer-lang-label"><i class="bi bi-globe"></i> Lang</span>
+                <div class="mobile-drawer-lang-options">
+                    <div class="mobile-lang-opt active" data-lang="en">ENG</div>
+                    <div class="mobile-lang-opt" data-lang="ta">TAM</div>
+                    <div class="mobile-lang-opt" data-lang="si">SIN</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/script.js"></script>
 

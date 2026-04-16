@@ -40,7 +40,7 @@
     grid-template-columns: 1fr 340px;
     gap: 52px;
     align-items: start;
-    margin-top: 120px;
+    margin-top: 0;
 }
 
 /* ================================================================
@@ -514,7 +514,6 @@
     grid-template-columns: 1fr 340px;
     gap: 52px;
     align-items: start;
-    margin-top: 120px;
 }
 
 /* ── Section heading ── */
@@ -993,31 +992,13 @@
    Services showcase block removed.
    ============================================================ */
 
-/* ── Design tokens ── */
-.cnt-body,
-.cnt-sidebar {
-    --_gold:        #c9a84c;
-    --_gold-light:  #e4c46e;
-    --_gold-bright: #f0d080;
-    --_gold-dark:   #9a7a2e;
-    --_gold-dim:    #7a5f22;
-    --_gold-border: rgba(201,168,76,0.35);
-    --_black-card:  #161616;
-    --_white:       #ffffff;
-    --_offwhite:    #f0ebe0;
-    --_grey-text:   #b8a888;
-    --_grey-dim:    #6a5c40;
-    --_shadow-gold: 0 4px 24px rgba(201,168,76,0.22);
-    --_radius:      10px;
-}
-
 /* ================================================================
    BODY LAYOUT
    ================================================================ */
 .cnt-body {
     max-width: 1320px;
-    margin: 120px auto 0;
-    padding: 70px 40px 100px;
+    margin:  auto ;
+    padding: 30px 40px 100px;
     display: grid;
     grid-template-columns: 1fr 340px;
     gap: 52px;
@@ -1026,8 +1007,13 @@
 
 /* ── Section heading ── */
 .cnt-sec-heading {
+    max-width: 1260px;
     display: flex; align-items: center; gap: 14px;
     margin-bottom: 26px;
+    margin-top: 170px;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 .cnt-sec-bar {
     width: 4px; height: 36px; border-radius: 2px; flex-shrink: 0;
