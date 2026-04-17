@@ -975,7 +975,7 @@
     .svc-quicknav { gap: 7px; }
     .svc-qnav-pill { font-size: 0.72rem; padding: 6px 12px; }
 }
-@media (max-width: 400px) {
+@media (max-width: 320px) {
     .svc-hero-title { font-size: 1.6rem; }
     .svc-body { padding: 26px 14px 50px; }
     .svc-steps { grid-template-columns: 1fr; }
@@ -1381,4 +1381,5 @@
     .cnt-body { padding: 26px 14px 50px; }
     .cnt-form-card { padding: 20px 16px; }
     .cnt-quote-text { font-size: 0.95rem; }
+    .cnt-sec-heading{margin-top: 100px;}
 }

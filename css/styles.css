@@ -154,6 +154,7 @@ a:hover { color: var(--gold-bright); }
 .other-webs-item:hover { background: var(--gold-muted); color: var(--gold-light); }
 
 .top-bar-right { display: flex; align-items: center; gap: 8px; }
+.top-nav-links a.active{color: var(--gold); background: var(--gold-muted);}
 
 .lang-wrap { position: relative; }
 .lang-btn {
@@ -1040,7 +1041,7 @@ a:hover { color: var(--gold-bright); }
     .obituary-card:nth-child(1){margin-top: 0;}
 }
 
-@media (min-width: 320px) and (max-width: 576px) {
+@media (min-width: 320px) and (max-width: 768px) {
     :root { --topbar-h: 24px; --mainbar-h: 52px; --subbar-h: 36px; --header-h: 52px; }
     .logo-wrap img { height: 38px; width: 120px; margin-bottom: 0; }
     .card-center { gap: 10px; }
@@ -1050,7 +1051,13 @@ a:hover { color: var(--gold-bright); }
     .reaction-btn { font-size: 0.66rem; padding: 3px 7px; }
     .hero-name { font-size: 1.1rem; }
     .hero-corner { width: 28px; height: 28px; }
+    .hero-photo { width: 100px; height: 120px; }
+    .hero-photo-outer{margin-left: -10px;}
+    .hero-title-tamil{font-size: 1.4rem;}
+    .hero-date-label{font-size: 0.8rem;}
+    .hero-action-btn{font-size: 0.6rem;}
     .mobile-search-wrap{ margin: 10px;}
+    .back-btn{top: 7%; margin-top: -10px;}
     .search-wrap{display: none;}
     .mobile-search-icon {
         position: absolute; right: 30px; top: 5.7%; transform: translateY(-50%);
@@ -1058,7 +1065,7 @@ a:hover { color: var(--gold-bright); }
     }
     .sub-bar{width: 100%; margin-top: 0; position: sticky; top: 0; z-index: 1000;}
     .obituary-card:nth-child(1){margin-top: 0;}
-    .center-content { overflow-y: auto; margin: 0;}
+    .center-content { overflow-y: auto; margin-top: -50px; margin-bottom: -75px;}
     .page-body { min-height: unset; }
     .center-content { height: auto; }
 }

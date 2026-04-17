@@ -39,6 +39,12 @@ document.querySelectorAll('.mobile-lang-opt').forEach(opt => {
     });
 });
 
+document.querySelectorAll('.mobile-drawer-link, .top-nav-links a').forEach(link => {
+    if (link.pathname === window.location.pathname) {
+        link.classList.add('active');
+    }
+});
+
 
 
 /* ── DATA ── */
