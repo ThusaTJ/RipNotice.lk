@@ -990,8 +990,7 @@ a:hover { color: var(--gold-bright); }
     .mobile-sidebar-row{margin-top: 105px;}
     .sub-bar{width: 100%; margin-top: 0; position: sticky; top: 0; z-index: 1000;}
     .obituary-card:nth-child(1){margin-top: 0;}
-
-
+    .center-content { overflow-y: auto; margin-top: -50px; margin-bottom: -75px;}
 }
 
 @media (max-width: 768px) {
